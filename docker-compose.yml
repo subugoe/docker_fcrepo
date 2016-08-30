@@ -1,0 +1,57 @@
+version: '2.0'
+services:
+
+
+  #   derived from: https://hub.docker.com/r/yinlinchen/fcrepo4-docker/
+  #   contains:
+  #     Fedora and Apache Karaf, Apache Camel
+  fcrepo:
+    build:                                    # on mac osx based host
+      context: ./docker/fcrepo
+      dockerfile: Dockerfile
+    container_name: gdz-be-fcrepo
+    restart: always
+    depends_on:
+      - fuseki
+      - solr
+    ports:
+      - "$FCREPO_EXTERNAL_PORT:$FCREPO_PORT"
+      - "1099:1099"
+    volumes:
+      - $FCREPO_STORAGE/fcrepo/:/var/lib/tomcat/fcrepo4-data
+    links:
+      - solr
+      - fuseki
+    user: $USER_UID
+    #mem_limit: 2GB
+    env_file: 
+      - .env
+
+
+  #   derived from: https://github.com/docker-solr/docker-solr/blob/2e1ccd64970c65e7dacfe33203963b315f665cc3/5.5/Dockerfile
+  solr:
+    build: docker/solr/
+    container_name: gdz-be-solr
+    restart: always
+    ports:
+      - "$SOLR_EXTERNAL_PORT:$SOLR_PORT"
+    volumes:
+      - $FCREPO_STORAGE/solr/:/opt/solr/gdz/data/
+    #mem_limit: 2GB
+    user: $USER_UID
+    env_file: 
+      - .env
+
+
+  #   admin password will be generated on first start-up (see the logs)
+  fuseki:
+    build: docker/fuseki/
+    container_name: gdz-be-fuseki
+    restart: always
+    ports:
+      - "$FUSEKI_EXTERNAL_PORT:$FUSEKI_PORT"
+    volumes:
+      - $FCREPO_STORAGE/fuseki/:/fuseki/
+    env_file:
+      - .env
+
