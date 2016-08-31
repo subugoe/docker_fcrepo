@@ -23,7 +23,7 @@ ENV BASE_DIR /var/lib/tomcat
 
 
 
-ENV KARAF_VERSION 4.0.5
+ENV KARAF_VERSION 4.0.6
 ENV KARAF_HOME  /opt/karaf
 
 ENV MAVEN_OPTS  "-Xmx1024m -XX:MaxMetaspaceSize=1024m"
