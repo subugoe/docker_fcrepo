@@ -16,6 +16,7 @@
 
 set -e
 
+
 if [ ! -f "$FUSEKI_BASE/shiro.ini" ] ; then
   # First time
   echo "###################################"

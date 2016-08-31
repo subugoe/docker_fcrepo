@@ -33,26 +33,27 @@ ENV FUSEKI_ARCHIVE http://archive.apache.org/dist/
 
 
 # Config and data
-VOLUME /fuseki
+#VOLUME /fuseki
 ENV FUSEKI_BASE /fuseki
+
+# Installation folder
+ENV FUSEKI_HOME /jena-fuseki
 
 
 ENV USER_UID=10021
 ENV USER_GID=999
 
 
-RUN adduser -u $USER_UID -S  fuseki
-#RUN addgroup  -g $USER_GID -S  fuseki 
+RUN delgroup ping
+RUN addgroup  -g $USER_GID -S  fuseki
+RUN adduser -u $USER_UID -G fuseki -S  fuseki
 
 
-# Installation folder
-ENV FUSEKI_HOME /jena-fuseki
 
-WORKDIR /tmp
-# sha1 checksum
-RUN echo "$FUSEKI_SHA1  fuseki.tar.gz" > fuseki.tar.gz.sha1
-# Download/check/unpack/move in one go (to reduce image size)
-RUN     wget -O fuseki.tar.gz $FUSEKI_MIRROR/jena/binaries/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz || \
+
+RUN     cd /tmp && \
+        echo "$FUSEKI_SHA1  fuseki.tar.gz" > fuseki.tar.gz.sha1 && \
+        wget -O fuseki.tar.gz $FUSEKI_MIRROR/jena/binaries/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz || \
         wget -O fuseki.tar.gz $FUSEKI_ARCHIVE/jena/binaries/apache-jena-fuseki-$FUSEKI_VERSION.tar.gz && \
         sha1sum -c fuseki.tar.gz.sha1 && \
         tar zxf fuseki.tar.gz && \
@@ -65,18 +66,13 @@ RUN     wget -O fuseki.tar.gz $FUSEKI_MIRROR/jena/binaries/apache-jena-fuseki-$F
 # we'll enable basic-auth with a random admin password
 # (which we'll generate on start-up)
 COPY shiro.ini /jena-fuseki/shiro.ini
-COPY docker-entrypoint.sh /
-RUN chmod 755 /docker-entrypoint.sh
 
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 COPY load.sh /jena-fuseki/
 COPY tdbloader /jena-fuseki/
 RUN chmod 755 /jena-fuseki/load.sh /jena-fuseki/tdbloader
-#VOLUME /staging
-
-
-RUN chown -R fuseki /fuseki/
-#databases/
 
 
 # Where we start our server from
