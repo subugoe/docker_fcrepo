@@ -56,6 +56,7 @@ COPY  config/admin-extra.menu-bottom.html /opt/solr/gdz/conf/admin-extra.menu-bo
 COPY  config/admin-extra.menu-top.html /opt/solr/gdz/conf/admin-extra.menu-top.html
 COPY  config/admin-extra.html /opt/solr/gdz/conf/admin-extra.html
 
+RUN rm -rf  /opt/solr/example/
 
 RUN chown -R solr:solr /opt/solr
 
