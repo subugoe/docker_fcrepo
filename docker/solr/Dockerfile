@@ -43,6 +43,20 @@ COPY  config/sub/mapping-FoldToASCII.txt /opt/solr/gdz/conf/mapping-FoldToASCII.
 COPY  config/sub/mapping-ISOLatin1Accent.txt /opt/solr/gdz/conf/mapping-ISOLatin1Accent.txt
 COPY  config/schema.xml /opt/solr/gdz/conf/schema.xml
 COPY  config/solrconfig.xml /opt/solr/gdz/conf/solrconfig.xml
+COPY  config/stopwords.txt /opt/solr/gdz/conf/stopwords.txt
+COPY  config/stopwords_en.txt /opt/solr/gdz/conf/stopwords_en.txt
+COPY  config/synonyms.txt /opt/solr/gdz/conf/synonyms.txt
+COPY  config/protwords.txt /opt/solr/gdz/conf/protwords.txt
+COPY  config/elevate.xml /opt/solr/gdz/conf/elevate.xml
+COPY  config/_rest_managed.json /opt/solr/gdz/conf/_rest_managed.json
+
+COPY  config/_schema_analysis_stopwords_english.json /opt/solr/gdz/conf/_schema_analysis_stopwords_english.json
+COPY  config/_schema_analysis_synonyms_english.json /opt/solr/gdz/conf/_schema_analysis_synonyms_english.json
+COPY  config/admin-extra.menu-bottom.html /opt/solr/gdz/conf/admin-extra.menu-bottom.html
+COPY  config/admin-extra.menu-top.html /opt/solr/gdz/conf/admin-extra.menu-top.html
+COPY  config/admin-extra.html /opt/solr/gdz/conf/admin-extra.html
+
+RUN rm -rf  /opt/solr/example/
 
 RUN chown -R solr:solr /opt/solr
 

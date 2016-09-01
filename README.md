@@ -8,9 +8,9 @@
 
 ## configuration
 
-Make a copy of the files ending with '_template' and set the properties in the new files ('.env' and '.env'). Then...
+Make a copy of the files ending with '.env_template' and set the properties in the new files ('.env'). Then...
 
-	$> source env.sh
+	$> source .env
 	$> ./start.sh
 
 Actually only the Apache Karaf features fcrepo-indexing-solr and fcrepo-indexing-triplestore are activated. If you need fcrepo-reindexing, fcrepo-fixity, fcrepo-serialization or fcrepo-audit-triplestore comment-in the parts in fedora_camel_toolbox.sh and fedora_camel_toolbox.script (in docker/fcrepo/scripts/).
