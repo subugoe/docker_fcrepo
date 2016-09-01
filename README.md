@@ -8,7 +8,7 @@
 
 ## configuration
 
-Make a copy of the files ending with '_template' and set the properties in the new files ('.env' and '.env'). Then...
+Make a copy of the files ending with '.env_template' and set the properties in the new files ('.env'). Then...
 
 	$> source .env
 	$> ./start.sh
